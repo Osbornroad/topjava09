@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
@@ -65,6 +66,7 @@ public abstract class JdbcMealRepositoryImpl<T> implements MealRepository {
     }
 
     @Override
+    @Transactional
     public Meal save(Meal meal, int userId) {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", meal.getId())
