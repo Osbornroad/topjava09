@@ -9,10 +9,13 @@ import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.service.UserService;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
@@ -61,13 +64,40 @@ public class RootController {
             int id = getId(request);
             mealRestController.delete(id);
             return "redirect:meals";
-        } /*else if ("create".equals(action) || "update".equals(action)) {
+        } else if ("create".equals(action) || "update".equals(action)) {
             final Meal meal = "create".equals(action) ?
                     new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
-                    mealController.get(getId(request));
-            request.setAttribute("meal", meal);
-            request.getRequestDispatcher("meal.jsp").forward(request, response);
-        }*/
+                    mealRestController.get(getId(request));
+            model.addAttribute("meal", meal);
+            return "meal";
+            //request.getRequestDispatcher("meal.jsp").forward(request, response);
+        }
+        return "redirect:meals";
+    }
+
+    @RequestMapping(value = "/meals", method = RequestMethod.POST)
+    public String addOrUpdateMeal(Model model, HttpServletRequest request) {
+        //request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
+        if (action == null) {
+            final Meal meal = new Meal(
+                    LocalDateTime.parse(request.getParameter("dateTime")),
+                    request.getParameter("description"),
+                    Integer.valueOf(request.getParameter("calories")));
+
+            if (request.getParameter("id").isEmpty()) {
+                mealRestController.create(meal);
+            } else {
+                mealRestController.update(meal, getId(request));
+            }
+        } else if ("filter".equals(action)) {
+            LocalDate startDate = DateTimeUtil.parseLocalDate(request.getParameter("startDate"));
+            LocalDate endDate = DateTimeUtil.parseLocalDate(request.getParameter("endDate"));
+            LocalTime startTime = DateTimeUtil.parseLocalTime(request.getParameter("startTime"));
+            LocalTime endTime = DateTimeUtil.parseLocalTime(request.getParameter("endTime"));
+            model.addAttribute("meals", mealRestController.getBetween(startDate, startTime, endDate, endTime));
+            return "meals";
+        }
         return "redirect:meals";
     }
 
