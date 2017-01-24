@@ -10,10 +10,7 @@ import org.hibernate.validator.constraints.Range;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * User: gkislin
@@ -135,6 +132,17 @@ public class User extends NamedEntity {
 
     public List<Meal> getMeals() {
         return meals;
+    }
+
+    public void addRole(Role role) {
+        if (roles == null)
+            roles = EnumSet.of(role);
+        else {
+            if (roles.contains(role))
+                throw new UnsupportedOperationException("User: " + name + " already have role: " + role.toString());
+            else
+                roles.add(role);
+        }
     }
 
     @Override
