@@ -47,7 +47,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void update() throws Exception {
+    public void testUpdate() throws Exception {
 
     }
 
