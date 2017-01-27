@@ -33,6 +33,7 @@ public class MealRestController extends AbstractMealController {
     }
 
     @Override
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<MealWithExceed> getAll() {
         return super.getAll();
     }

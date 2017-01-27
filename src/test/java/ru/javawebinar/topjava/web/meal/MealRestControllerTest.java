@@ -1,20 +1,16 @@
 package ru.javawebinar.topjava.web.meal;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
-import ru.javawebinar.topjava.AuthorizedUser;
+import ru.javawebinar.topjava.TestUtil;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.junit.Assert.*;
-import static ru.javawebinar.topjava.MealTestData.MEAL1;
-import static ru.javawebinar.topjava.MealTestData.MEAL1_ID;
-import static ru.javawebinar.topjava.MealTestData.MEAL_MATCHER;
-import static ru.javawebinar.topjava.UserTestData.USER_ID;
+import static ru.javawebinar.topjava.MealTestData.*;
+
 
 /**
  * Created by User on 27.01.2017.
@@ -29,16 +25,20 @@ public class MealRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MEAL_MATCHER.contentMatcher(MEAL1));
+                .andExpect(MATCHER.contentMatcher(MEAL1));
+    }
+
+    @Test
+    public void testGetAll() throws Exception {
+        TestUtil.print(mockMvc.perform(get(MEAL_REST_URL))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+            .andExpect(MEAL_WITH_EXCEED_MATCHER.contentListMatcher(MEALS_WITH_EXCEED)));
     }
 
     @Test
     public void delete() throws Exception {
-
-    }
-
-    @Test
-    public void getAll() throws Exception {
 
     }
 

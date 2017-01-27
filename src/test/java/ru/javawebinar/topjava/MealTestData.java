@@ -2,8 +2,10 @@ package ru.javawebinar.topjava;
 
 import ru.javawebinar.topjava.matcher.ModelMatcher;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.to.MealWithExceed;
 
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -18,6 +20,7 @@ import static ru.javawebinar.topjava.model.BaseEntity.START_SEQ;
 public class MealTestData {
 
     public static final ModelMatcher<Meal> MATCHER = ModelMatcher.of(Meal.class);
+    public static final ModelMatcher<MealWithExceed> MEAL_WITH_EXCEED_MATCHER = ModelMatcher.of(MealWithExceed.class);
 
     public static final int MEAL1_ID = START_SEQ + 2;
     public static final int ADMIN_MEAL_ID = START_SEQ + 8;
@@ -33,6 +36,15 @@ public class MealTestData {
 
     public static final List<Meal> MEALS = Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
 
+    public static final MealWithExceed MEAL_WITH_EXCEED_1 = new MealWithExceed(MEAL1, false);
+    public static final MealWithExceed MEAL_WITH_EXCEED_2 = new MealWithExceed(MEAL2, false);
+    public static final MealWithExceed MEAL_WITH_EXCEED_3 = new MealWithExceed(MEAL3, false);
+    public static final MealWithExceed MEAL_WITH_EXCEED_4 = new MealWithExceed(MEAL4, true);
+    public static final MealWithExceed MEAL_WITH_EXCEED_5 = new MealWithExceed(MEAL5, true);
+    public static final MealWithExceed MEAL_WITH_EXCEED_6 = new MealWithExceed(MEAL6, true);
+
+    public static final List<MealWithExceed> MEALS_WITH_EXCEED = Arrays.asList(MEAL_WITH_EXCEED_6, MEAL_WITH_EXCEED_5, MEAL_WITH_EXCEED_4, MEAL_WITH_EXCEED_3, MEAL_WITH_EXCEED_2, MEAL_WITH_EXCEED_1);
+
     public static Meal getCreated() {
         return new Meal(null, of(2015, Month.JUNE, 1, 18, 0), "Созданный ужин", 300);
     }
@@ -40,14 +52,4 @@ public class MealTestData {
     public static Meal getUpdated() {
         return new Meal(MEAL1_ID, MEAL1.getDateTime(), "Обновленный завтрак", 200);
     }
-
-    public static final ModelMatcher<Meal> MEAL_MATCHER = ModelMatcher.of(Meal.class,
-            (expected, actual) -> expected == actual ||
-                    (Objects.equals(expected.getId(), actual.getId())
-                            && Objects.equals(expected.getDateTime(), actual.getDateTime())
-                            && Objects.equals(expected.getDescription(), actual.getDescription())
-                            && Objects.equals(expected.getCalories(), actual.getCalories())
-                            && Objects.equals(expected.getDateTime(), actual.getDateTime())
-                    )
-    );
 }
