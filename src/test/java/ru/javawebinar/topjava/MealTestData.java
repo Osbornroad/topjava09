@@ -36,6 +36,8 @@ public class MealTestData {
 
     public static final List<Meal> MEALS = Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
 
+    public static final List<Meal> MEALS_DELETED = Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2);
+
     public static final MealWithExceed MEAL_WITH_EXCEED_1 = new MealWithExceed(MEAL1, false);
     public static final MealWithExceed MEAL_WITH_EXCEED_2 = new MealWithExceed(MEAL2, false);
     public static final MealWithExceed MEAL_WITH_EXCEED_3 = new MealWithExceed(MEAL3, false);

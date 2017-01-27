@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javawebinar.topjava.MealTestData.*;
+import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
 
 /**
@@ -38,8 +39,11 @@ public class MealRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void delete() throws Exception {
-
+    public void testDelete() throws Exception {
+        mockMvc.perform(delete(MEAL_REST_URL + MEAL1_ID))
+                .andDo(print())
+                .andExpect(status().isOk());
+        MATCHER.assertCollectionEquals(MEALS_DELETED, mealService.getAll(USER_ID));
     }
 
     @Test
