@@ -2,8 +2,11 @@ package ru.javawebinar.topjava.web.meal;
 
 import org.junit.Test;
 import org.springframework.http.MediaType;
+import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.TestUtil;
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
+import ru.javawebinar.topjava.web.json.JsonUtil;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -48,7 +51,15 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdate() throws Exception {
+        Meal updated = new Meal(MEAL1);
+        updated.setDescription("UpdatedDescription");
+        updated.setCalories(999);
+        mockMvc.perform(put(MEAL_REST_URL + MEAL1_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updated)))
+                .andExpect(status().isOk());
 
+        MATCHER.assertEquals(updated, mealService.get(MEAL1_ID, AuthorizedUser.id()));
     }
 
     @Test
