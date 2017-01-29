@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.web.meal;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,7 +58,34 @@ public class MealRestController extends AbstractMealController {
     }
 
     @Override
-    public List<MealWithExceed> getBetween(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime) {
-        return super.getBetween(startDate, startTime, endDate, endTime);
+    @GetMapping(value = "/between", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<MealWithExceed> getBetween(@RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                           @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalTime startTime,
+                                           @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalDate endDate,
+                                           @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime) {
+        List<MealWithExceed> result = super.getBetween(startDate, startTime, endDate, endTime);
+        return result;
     }
+
+    /*
+    '2011-12-03T10:15:30'
+
+@DateTimeFormat(iso = ISO.DATE)
+    private LocalDate localDate;
+
+    @DateTimeFormat(iso = ISO.TIME)
+    private LocalTime localTime;
+
+    @DateTimeFormat(iso = ISO.TIME)
+    private OffsetTime offsetTime;
+
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+    private LocalDateTime localDateTime;
+
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+    private ZonedDateTime zonedDateTime;
+
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+    private OffsetDateTime offsetDateTime;
+ */
 }

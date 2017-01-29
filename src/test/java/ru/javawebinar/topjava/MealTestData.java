@@ -47,6 +47,9 @@ public class MealTestData {
 
     public static final List<MealWithExceed> MEALS_WITH_EXCEED = Arrays.asList(MEAL_WITH_EXCEED_6, MEAL_WITH_EXCEED_5, MEAL_WITH_EXCEED_4, MEAL_WITH_EXCEED_3, MEAL_WITH_EXCEED_2, MEAL_WITH_EXCEED_1);
 
+    public static final List<MealWithExceed> MEALS_BETWEEN = Arrays.asList(MEAL_WITH_EXCEED_3, MEAL_WITH_EXCEED_2);
+
+
     public static Meal getCreated() {
         return new Meal(null, of(2015, Month.JUNE, 1, 18, 0), "Созданный ужин", 300);
     }

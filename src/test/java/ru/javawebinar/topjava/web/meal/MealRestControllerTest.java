@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.web.meal;
 
 import org.junit.Test;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import ru.javawebinar.topjava.AuthorizedUser;
@@ -88,8 +89,34 @@ public class MealRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void getBetween() throws Exception {
-
+    public void testGetBetween() throws Exception {
+        TestUtil.print(mockMvc.perform(get(MEAL_REST_URL +
+                "between?startDate=2015-05-29&startTime=12:00:00&endDate=2015-05-30&endTime=20:00:01"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MEAL_WITH_EXCEED_MATCHER.contentListMatcher(MEALS_BETWEEN)));
     }
+/*
+'2011-12-03T10:15:30'
+startDate, startTime, endDate, endTime
 
+@DateTimeFormat(iso = ISO.DATE)
+    private LocalDate localDate;
+
+    @DateTimeFormat(iso = ISO.TIME)
+    private LocalTime localTime;
+
+    @DateTimeFormat(iso = ISO.TIME)
+    private OffsetTime offsetTime;
+
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+    private LocalDateTime localDateTime;
+
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+    private ZonedDateTime zonedDateTime;
+
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+    private OffsetDateTime offsetDateTime;
+ */
 }
