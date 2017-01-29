@@ -2,12 +2,19 @@ package ru.javawebinar.topjava.web.meal;
 
 import org.junit.Test;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultActions;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.TestUtil;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static java.time.LocalDateTime.of;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -63,8 +70,21 @@ public class MealRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void create() throws Exception {
+    public void testCreate() throws Exception {
+        Meal expected = new Meal(of(2020, Month.JANUARY, 01, 12, 59), "Created meal", 199);
+        ResultActions action = mockMvc.perform(post(MEAL_REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(expected))).andExpect(status().isCreated());
 
+
+        Meal returned = MATCHER.fromJsonAction(action);
+        expected.setId(returned.getId());
+
+        MATCHER.assertEquals(expected, returned);
+        List<Meal> estimatedList = new ArrayList<>();
+        estimatedList.addAll(MEALS);
+        estimatedList.add(0, expected);
+        MATCHER.assertCollectionEquals(estimatedList, mealService.getAll(USER_ID));
     }
 
     @Test
