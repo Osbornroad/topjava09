@@ -9,6 +9,7 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealWithExceed;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.net.URI;
@@ -57,35 +58,14 @@ public class MealRestController extends AbstractMealController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @Override
     @GetMapping(value = "/between", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<MealWithExceed> getBetween(@RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                           @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalTime startTime,
-                                           @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalDate endDate,
-                                           @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime) {
+    public List<MealWithExceed> getBetween(@RequestParam("startDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDateTime,
+                                           @RequestParam("endDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDateTime) {
+        LocalDate startDate = startDateTime.toLocalDate();
+        LocalTime startTime = startDateTime.toLocalTime();
+        LocalDate endDate = endDateTime.toLocalDate();
+        LocalTime endTime = endDateTime.toLocalTime();
         List<MealWithExceed> result = super.getBetween(startDate, startTime, endDate, endTime);
         return result;
     }
-
-    /*
-    '2011-12-03T10:15:30'
-
-@DateTimeFormat(iso = ISO.DATE)
-    private LocalDate localDate;
-
-    @DateTimeFormat(iso = ISO.TIME)
-    private LocalTime localTime;
-
-    @DateTimeFormat(iso = ISO.TIME)
-    private OffsetTime offsetTime;
-
-    @DateTimeFormat(iso = ISO.DATE_TIME)
-    private LocalDateTime localDateTime;
-
-    @DateTimeFormat(iso = ISO.DATE_TIME)
-    private ZonedDateTime zonedDateTime;
-
-    @DateTimeFormat(iso = ISO.DATE_TIME)
-    private OffsetDateTime offsetDateTime;
- */
 }
