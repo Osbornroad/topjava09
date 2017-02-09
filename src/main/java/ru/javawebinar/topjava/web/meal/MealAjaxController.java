@@ -28,6 +28,11 @@ public class MealAjaxController extends AbstractMealController {
         return super.getAll();
     }
 
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Meal get(@PathVariable("id") int id) {
+        return super.get(id);
+    }
+
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable("id") int id) {
         super.delete(id);
@@ -37,9 +42,9 @@ public class MealAjaxController extends AbstractMealController {
     public void updateOrCreate(MealTo mealTo) {
         if (mealTo.isNew()) {
             super.create(MealsUtil.createNewMealFromMealTo(mealTo));
-        } /*else {
-            super.update(meal, meal.getId());
-        }*/
+        } else {
+            super.update(mealTo, mealTo.getId());
+        }
     }
 
     @PostMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)

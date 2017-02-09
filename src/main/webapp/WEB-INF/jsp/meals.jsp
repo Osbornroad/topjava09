@@ -86,7 +86,8 @@
                             </td>
                             <td>${meal.description}</td>
                             <td>${meal.calories}</td>
-                            <td><a class="btn btn-xs btn-primary">
+                            <td><a class="btn btn-xs btn-primary" onclick="updateRow(${meal.id})">
+                            <%--<td><a class="btn btn-xs btn-primary">--%>
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a></td>
                             <td><a class="btn btn-xs btn-danger" onclick="deleteRow(${meal.id})">
@@ -151,4 +152,12 @@
     </div>
 </div>
 </body>
+<script type="text/javascript">
+    var i18n = [];
+
+    var editTitle ='<spring:message code="meals.edit"/>';
+/*    <c:forEach var='key' items='<%=new String[]{"common.deleted","common.saved","common.enabled","common.disabled","common.failed"}%>'>
+    i18n['${key}'] = '<spring:message code="${key}"/>';
+    </c:forEach>*/
+</script>
 </html>
