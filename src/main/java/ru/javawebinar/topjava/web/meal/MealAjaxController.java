@@ -4,7 +4,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.to.MealWithExceed;
+import ru.javawebinar.topjava.to.UserTo;
+import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.util.UserUtil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,16 +34,12 @@ public class MealAjaxController extends AbstractMealController {
     }
 
     @PostMapping
-    public void updateOrCreate(@RequestParam("id") Integer id,
-                               @RequestParam("dateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
-                               @RequestParam("description") String description,
-                               @RequestParam("calories") int calories) {
-        Meal meal = new Meal(id, dateTime, description, calories);
-        if (meal.isNew()) {
-            super.create(meal);
-        } else {
-            super.update(meal, id);
-        }
+    public void updateOrCreate(MealTo mealTo) {
+        if (mealTo.isNew()) {
+            super.create(MealsUtil.createNewMealFromMealTo(mealTo));
+        } /*else {
+            super.update(meal, meal.getId());
+        }*/
     }
 
     @PostMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
