@@ -1,6 +1,9 @@
 package ru.javawebinar.topjava.to;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * Created by User on 09.02.2017.
@@ -9,7 +12,8 @@ public class MealTo{
 
     private Integer id;
 
-    private String stringDateTime;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime dateTime;
 
     private String description;
 
@@ -18,9 +22,9 @@ public class MealTo{
     public MealTo() {
     }
 
-    public MealTo(Integer id, String stringDateTime, String description, int calories) {
+    public MealTo(Integer id, LocalDateTime dateTime, String description, int calories) {
         this.id = id;
-        this.stringDateTime = stringDateTime;
+        this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
     }
@@ -33,12 +37,13 @@ public class MealTo{
         this.id = id;
     }
 
-    public String getStringDateTime() {
-        return stringDateTime;
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setStringDateTime(String stringDateTime) {
-        this.stringDateTime = stringDateTime;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getDescription() {
@@ -65,7 +70,7 @@ public class MealTo{
     public String toString() {
         return "MealTo{" +
                 "id=" + id +
-                ", stringDateTime='" + stringDateTime + '\'' +
+                ", stringDateTime='" + dateTime + '\'' +
                 ", description='" + description + '\'' +
                 ", calories=" + calories +
                 '}';

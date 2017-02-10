@@ -51,11 +51,11 @@ public class MealsUtil {
     }
 
     public static Meal createNewMealFromMealTo(MealTo newMealTo) {
-        return new Meal(DateTimeUtil.parseLocalDateTime(newMealTo.getStringDateTime()), newMealTo.getDescription(), newMealTo.getCalories());
+        return new Meal(newMealTo.getDateTime(), newMealTo.getDescription(), newMealTo.getCalories());
     }
 
     public static Meal updateMealFromMealTo(Meal meal, MealTo mealTo) {
-        meal.setDateTime(DateTimeUtil.parseLocalDateTime(mealTo.getStringDateTime()));
+        meal.setDateTime(mealTo.getDateTime());
         meal.setDescription(mealTo.getDescription());
         meal.setCalories(mealTo.getCalories());
         return meal;
