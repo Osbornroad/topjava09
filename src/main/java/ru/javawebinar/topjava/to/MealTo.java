@@ -1,7 +1,11 @@
 package ru.javawebinar.topjava.to;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -12,9 +16,11 @@ public class MealTo{
 
     private Integer id;
 
+    //@NotBlank(message = "Date&Time must not be null")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dateTime;
 
+    @NotBlank(message = "Description must not be null")
     private String description;
 
     private int calories;
