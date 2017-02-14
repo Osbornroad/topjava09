@@ -17,8 +17,8 @@ import ru.javawebinar.topjava.util.MealsUtil;
 @Controller
 public class RootController {
 
-    @Autowired
-    private MealService mealService;
+/*    @Autowired
+    private MealService mealService;*/
 
     @GetMapping("/")
     public String root() {
@@ -41,8 +41,8 @@ public class RootController {
 
     @GetMapping("/meals")
     public String meals(Model model) {
-        model.addAttribute("meals",
-                MealsUtil.getWithExceeded(mealService.getAll(AuthorizedUser.id()), AuthorizedUser.getCaloriesPerDay()));
+//        model.addAttribute("meals",
+//                MealsUtil.getWithExceeded(mealService.getAll(AuthorizedUser.id()), AuthorizedUser.getCaloriesPerDay()));
         return "meals";
     }
 }

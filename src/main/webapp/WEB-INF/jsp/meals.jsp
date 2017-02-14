@@ -76,25 +76,25 @@
                         <th></th>
                     </tr>
                     </thead>
-                    <c:forEach items="${meals}" var="meal">
+                    <%--<c:forEach items="${meals}" var="meal">
                         <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.MealWithExceed"/>
                         <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
                             <td>
-                                    <%--<fmt:parseDate value="${meal.dateTime}" pattern="y-M-dd'T'H:m" var="parsedDate"/>--%>
-                                    <%--<fmt:formatDate value="${parsedDate}" pattern="yyyy.MM.dd HH:mm" />--%>
+                                    &lt;%&ndash;<fmt:parseDate value="${meal.dateTime}" pattern="y-M-dd'T'H:m" var="parsedDate"/>&ndash;%&gt;
+                                    &lt;%&ndash;<fmt:formatDate value="${parsedDate}" pattern="yyyy.MM.dd HH:mm" />&ndash;%&gt;
                                     ${fn:formatDateTime(meal.dateTime)}
                             </td>
                             <td>${meal.description}</td>
                             <td>${meal.calories}</td>
                             <td><a class="btn btn-xs btn-primary" onclick="updateRow(${meal.id})">
-                            <%--<td><a class="btn btn-xs btn-primary">--%>
+                            &lt;%&ndash;<td><a class="btn btn-xs btn-primary">&ndash;%&gt;
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a></td>
                             <td><a class="btn btn-xs btn-danger" onclick="deleteRow(${meal.id})">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                             </a></td>
                         </tr>
-                    </c:forEach>
+                    </c:forEach>--%>
                 </table>
             </div>
         </div>
